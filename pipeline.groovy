@@ -1,3 +1,4 @@
+def url_repo = 'https://github.com/WilliamArceA/Api-Activos.git'
 pipeline{
     agent{
         label 'jenkins_slave' 
@@ -5,10 +6,20 @@ pipeline{
     tools{
         nodejs 'node20'
     }
+     parameters{
+         string defaultValue: 'dev', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
+    }
     environment {
-        workspace="/data/"
+        VAR='NUEVO'
     }
     stages{
+        stage("create build name"){
+            steps{           
+                script{
+                   currentBuild.displayName= "service_back-"+ currentBuild.number
+                }
+            }
+        }
         stage("Limpiar"){
             steps{
                 cleanWs()
@@ -16,7 +27,7 @@ pipeline{
         }
         stage("Download project"){
             steps{
-                git credentialsId: 'git_credentials', branch: "develop", url: "https://github.com/WilliamArceA/Api-Activos.git"
+                git credentialsId: 'git_credentials', branch: "${BRANCH}", url: "${url_repo}"
                 echo "Proyecto descargado"
             }
         }
