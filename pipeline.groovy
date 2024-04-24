@@ -7,7 +7,7 @@ pipeline{
         nodejs 'node20'
     }
      parameters{
-         string defaultValue: 'dev', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
+         string defaultValue: 'develop', description: 'Colocar un brach a deployar', name: 'BRANCH', trim: false
     }
     environment {
         VAR='NUEVO'
